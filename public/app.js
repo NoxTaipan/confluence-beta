@@ -1,16 +1,26 @@
 const STORAGE_KEY = 'confluence-draft';
 const selected = { twitchGameId: null, kickCategoryId: null, twitchGameName: null, kickCategoryName: null };
 
-async function loadStatus() {
-  const res = await fetch('/api/status');
-  const status = await res.json();
+// Cacheado para poder re-renderizar los textos de conectar/desconectar cuando
+// cambia el idioma, sin tener que volver a pedir el estado al servidor.
+let lastStatus = {};
+
+function renderStatus() {
   document.querySelectorAll('.platform-pill').forEach((pill) => {
     const platform = pill.dataset.platform;
-    const connected = !!status[platform];
+    const connected = !!lastStatus[platform];
     pill.dataset.connected = connected;
-    pill.querySelector('.state').textContent = connected ? 'desconectar' : 'conectar';
+    pill.querySelector('.state').textContent = connected ? t('state_disconnect') : t('state_connect');
   });
 }
+
+async function loadStatus() {
+  const res = await fetch('/api/status');
+  lastStatus = await res.json();
+  renderStatus();
+}
+
+window.addEventListener('confluence-lang-changed', renderStatus);
 
 // Mientras el popup de OAuth siga abierto no sabemos cuanto va a tardar el
 // usuario en autorizar - se sondea el estado cada segundo hasta que lo
@@ -190,7 +200,7 @@ function saveDraft() {
   const log = document.getElementById('log');
   const row = document.createElement('div');
   row.className = 'row';
-  row.innerHTML = '<span>Guardado</span><span class="ok">OK</span>';
+  row.innerHTML = `<span>${t('log_saved')}</span><span class="ok">OK</span>`;
   log.prepend(row);
 }
 

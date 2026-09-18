@@ -12,46 +12,50 @@
   <div class="brand">
     <div class="mark"></div>
     <h1>Confluence Stream Info</h1>
+    <div class="lang-toggle">
+      <button type="button" data-lang="es" aria-label="Español" title="Español">🇪🇸</button>
+      <button type="button" data-lang="en" aria-label="English" title="English">🇬🇧</button>
+    </div>
   </div>
   <div class="suite-tag">Confluence Suite</div>
 
   <div class="platforms">
-    <div class="platform-pill" data-platform="twitch" role="button" tabindex="0" aria-label="Conectar o desconectar Twitch">
+    <div class="platform-pill" data-platform="twitch" role="button" tabindex="0" data-i18n-aria="aria_toggle_twitch">
       <span class="name"><span class="platform-icon-holder"></span>Twitch</span>
       <span class="state">conectar</span>
     </div>
-    <div class="platform-pill" data-platform="youtube" role="button" tabindex="0" aria-label="Conectar o desconectar YouTube">
+    <div class="platform-pill" data-platform="youtube" role="button" tabindex="0" data-i18n-aria="aria_toggle_youtube">
       <span class="name"><span class="platform-icon-holder"></span>YouTube</span>
       <span class="state">conectar</span>
     </div>
-    <div class="platform-pill" data-platform="kick" role="button" tabindex="0" aria-label="Conectar o desconectar Kick">
+    <div class="platform-pill" data-platform="kick" role="button" tabindex="0" data-i18n-aria="aria_toggle_kick">
       <span class="name"><span class="platform-icon-holder"></span>Kick</span>
       <span class="state">conectar</span>
     </div>
   </div>
 
   <fieldset>
-    <legend>Info compartida</legend>
-    <label for="title">Titulo</label>
-    <input type="text" id="title" placeholder="Titulo del stream" />
+    <legend data-i18n="legend_shared_info">Info compartida</legend>
+    <label for="title" data-i18n="label_title">Titulo</label>
+    <input type="text" id="title" placeholder="Titulo del stream" data-i18n-placeholder="placeholder_title" />
 
-    <label for="tags">Tags (separados por coma)</label>
-    <input type="text" id="tags" placeholder="español, fps, ranked" />
+    <label for="tags" data-i18n="label_tags">Tags (separados por coma)</label>
+    <input type="text" id="tags" placeholder="español, fps, ranked" data-i18n-placeholder="placeholder_tags" />
   </fieldset>
 
   <fieldset>
-    <legend>Categoria por plataforma</legend>
+    <legend data-i18n="legend_category">Categoria por plataforma</legend>
 
     <div class="category-row" data-platform="twitch">
       <div class="platform-label" style="color:var(--twitch)"><span class="platform-icon-holder"></span>Twitch</div>
-      <input type="text" class="category-search" placeholder="Buscar juego..." autocomplete="off" />
+      <input type="text" class="category-search" placeholder="Buscar juego..." autocomplete="off" data-i18n-placeholder="placeholder_search_game" />
       <div class="results" hidden></div>
       <div class="selected-chip" hidden></div>
     </div>
 
     <div class="category-row" data-platform="kick">
       <div class="platform-label" style="color:var(--kick)"><span class="platform-icon-holder"></span>Kick</div>
-      <input type="text" class="category-search" placeholder="Buscar categoria..." autocomplete="off" />
+      <input type="text" class="category-search" placeholder="Buscar categoria..." autocomplete="off" data-i18n-placeholder="placeholder_search_category" />
       <div class="results" hidden></div>
       <div class="selected-chip" hidden></div>
     </div>
@@ -69,16 +73,16 @@
   </fieldset>
 
   <div class="actions">
-    <button class="primary" id="push-all">Publicar a las 3</button>
+    <button class="primary" id="push-all" data-i18n="btn_publish_all">Publicar a las 3</button>
   </div>
   <div class="actions">
-    <button class="small" data-push="twitch">Solo Twitch</button>
-    <button class="small" data-push="youtube">Solo YouTube</button>
-    <button class="small" data-push="kick">Solo Kick</button>
+    <button class="small" data-push="twitch" data-i18n="btn_only_twitch">Solo Twitch</button>
+    <button class="small" data-push="youtube" data-i18n="btn_only_youtube">Solo YouTube</button>
+    <button class="small" data-push="kick" data-i18n="btn_only_kick">Solo Kick</button>
   </div>
   <div class="actions">
-    <button class="small" id="save-all">Guardar todo</button>
-    <button class="small" id="clear-all">Limpiar todo</button>
+    <button class="small" id="save-all" data-i18n="btn_save_all">Guardar todo</button>
+    <button class="small" id="clear-all" data-i18n="btn_clear_all">Limpiar todo</button>
   </div>
 
   <div class="results-log" id="log"></div>
@@ -86,6 +90,7 @@
   <div class="credit">Confluence — by NOX TAIPAN</div>
 
   <script src="platform-icons.js"></script>
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

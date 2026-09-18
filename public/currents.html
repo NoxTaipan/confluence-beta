@@ -27,33 +27,37 @@
         <span class="platform-icon-holder"></span>
       </div>
     </div>
-    <button class="settings-btn" id="settings-btn" type="button" aria-label="Configuracion" aria-haspopup="true" aria-expanded="false">⚙</button>
+    <button class="settings-btn" id="settings-btn" type="button" data-i18n-aria="aria_settings" aria-haspopup="true" aria-expanded="false">⚙</button>
+    <div class="lang-toggle">
+      <button type="button" data-lang="es" aria-label="Español" title="Español">🇪🇸</button>
+      <button type="button" data-lang="en" aria-label="English" title="English">🇬🇧</button>
+    </div>
   </div>
   <div class="suite-tag">Confluence Suite · by NOX TAIPAN</div>
 
   <div class="settings-menu" id="settings-menu" hidden>
-    <div class="settings-label">Resaltar menciones</div>
-    <input type="text" id="mention-keyword" class="settings-input" placeholder="ej: noxtaipan" autocomplete="off" />
+    <div class="settings-label" data-i18n="settings_mentions">Resaltar menciones</div>
+    <input type="text" id="mention-keyword" class="settings-input" placeholder="ej: noxtaipan" autocomplete="off" data-i18n-placeholder="placeholder_mention" />
 
-    <div class="settings-label">Limpiar chat</div>
-    <button class="settings-item" data-clear="all">Todo</button>
-    <button class="settings-item" data-clear="twitch">Solo Twitch</button>
-    <button class="settings-item" data-clear="youtube">Solo YouTube</button>
-    <button class="settings-item" data-clear="kick">Solo Kick</button>
+    <div class="settings-label" data-i18n="settings_clear_chat">Limpiar chat</div>
+    <button class="settings-item" data-clear="all" data-i18n="clear_all_neutral">Todo</button>
+    <button class="settings-item" data-clear="twitch" data-i18n="btn_only_twitch">Solo Twitch</button>
+    <button class="settings-item" data-clear="youtube" data-i18n="btn_only_youtube">Solo YouTube</button>
+    <button class="settings-item" data-clear="kick" data-i18n="btn_only_kick">Solo Kick</button>
   </div>
 
   <div class="chat-feed" id="chat-feed"></div>
 
   <div class="composer">
     <div class="composer-emoji-wrap">
-      <button class="emoji-btn" id="emoji-btn" type="button" aria-label="Emojis" aria-haspopup="true" aria-expanded="false">🙂</button>
+      <button class="emoji-btn" id="emoji-btn" type="button" data-i18n-aria="aria_emojis" aria-haspopup="true" aria-expanded="false">🙂</button>
       <div class="emoji-picker" id="emoji-picker" hidden></div>
     </div>
-    <input type="text" id="composer-input" placeholder="Escribe un mensaje..." autocomplete="off" />
-    <button class="composer-send" id="composer-send" type="button" aria-label="Enviar">➤</button>
+    <input type="text" id="composer-input" placeholder="Escribe un mensaje..." autocomplete="off" data-i18n-placeholder="placeholder_message" />
+    <button class="composer-send" id="composer-send" type="button" data-i18n-aria="aria_send">➤</button>
   </div>
   <div class="composer-targets">
-    <button class="composer-target composer-target-all" id="composer-target-all" type="button" aria-label="Todos">Todos</button>
+    <button class="composer-target composer-target-all" id="composer-target-all" type="button" data-i18n-aria="target_all" data-i18n="target_all">Todos</button>
     <button class="composer-target" data-platform="twitch" data-active="true" data-status="offline" type="button" aria-label="Twitch">
       <span class="status-dot"></span><span class="platform-icon-holder"></span>
     </button>
@@ -66,6 +70,7 @@
   </div>
 
   <script src="platform-icons.js"></script>
+  <script src="i18n.js"></script>
   <script src="currents.js"></script>
 </body>
 </html>
