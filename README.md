@@ -33,6 +33,8 @@ Con la tarea programada, Confluence ya esta arriba antes de que abras OBS, y ade
 
 `scripts/obs-autostart.lua` (Tools → Scripts en OBS) sigue existiendo solo como respaldo: si por lo que sea Confluence no esta corriendo cuando abres OBS, lo arranca. Ya no lo detiene al cerrar OBS.
 
+**Si un dock queda pegado en "server refused the connection"** (por ejemplo la primera vez, antes de instalar la tarea programada, o si reiniciaste el servidor a mano con uno de los docks ya abierto): dale clic a **"Click here to retry"** en ese dock. El servidor puede estar perfectamente sano — Chromium (CEF) simplemente no reintenta la conexion solo despues de fallar una vez, hay que pedirselo a mano.
+
 ## Multistream (video)
 
 Confluence solo maneja titulo/categoria/tags. El envio del video en si a YouTube/Kick es un tema aparte — si tambien haces multistream nativo desde OBS, [confluence-multistream](https://github.com/NoxTaipan/confluence-multistream) (fork de obs-multi-rtmp con soporte websocket) es opcional y totalmente independiente de este proyecto.
