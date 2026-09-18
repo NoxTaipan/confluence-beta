@@ -1,3 +1,5 @@
+[🇬🇧 English](README.en.md) | 🇪🇸 **Español**
+
 # Confluence (Beta)
 
 **Confluence Suite** es un panel para streamers que unifica el control de Twitch, YouTube y Kick dentro de OBS, como Custom Browser Docks. Build pública de [NOX TAIPAN](https://github.com/NoxTaipan), pensada para que cualquier streamer la auto-hospede con sus propias credenciales OAuth: cada quien corre su propia instancia en su propia PC, no hay servidor compartido ni cuenta central — tus tokens y tu chat nunca salen de tu maquina.
