@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Confluence Stream Info</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="brand">
+    <div class="mark"></div>
+    <h1>Confluence Stream Info</h1>
+  </div>
+  <div class="suite-tag">Confluence Suite</div>
+
+  <div class="platforms">
+    <div class="platform-pill" data-platform="twitch" role="button" tabindex="0" aria-label="Conectar o desconectar Twitch">
+      <span class="name"><span class="platform-icon-holder"></span>Twitch</span>
+      <span class="state">conectar</span>
+    </div>
+    <div class="platform-pill" data-platform="youtube" role="button" tabindex="0" aria-label="Conectar o desconectar YouTube">
+      <span class="name"><span class="platform-icon-holder"></span>YouTube</span>
+      <span class="state">conectar</span>
+    </div>
+    <div class="platform-pill" data-platform="kick" role="button" tabindex="0" aria-label="Conectar o desconectar Kick">
+      <span class="name"><span class="platform-icon-holder"></span>Kick</span>
+      <span class="state">conectar</span>
+    </div>
+  </div>
+
+  <fieldset>
+    <legend>Info compartida</legend>
+    <label for="title">Titulo</label>
+    <input type="text" id="title" placeholder="Titulo del stream" />
+
+    <label for="tags">Tags (separados por coma)</label>
+    <input type="text" id="tags" placeholder="español, fps, ranked" />
+  </fieldset>
+
+  <fieldset>
+    <legend>Categoria por plataforma</legend>
+
+    <div class="category-row" data-platform="twitch">
+      <div class="platform-label" style="color:var(--twitch)"><span class="platform-icon-holder"></span>Twitch</div>
+      <input type="text" class="category-search" placeholder="Buscar juego..." autocomplete="off" />
+      <div class="results" hidden></div>
+      <div class="selected-chip" hidden></div>
+    </div>
+
+    <div class="category-row" data-platform="kick">
+      <div class="platform-label" style="color:var(--kick)"><span class="platform-icon-holder"></span>Kick</div>
+      <input type="text" class="category-search" placeholder="Buscar categoria..." autocomplete="off" />
+      <div class="results" hidden></div>
+      <div class="selected-chip" hidden></div>
+    </div>
+
+    <div class="category-row" data-platform="youtube">
+      <div class="platform-label" style="color:var(--youtube)"><span class="platform-icon-holder"></span>YouTube</div>
+      <select id="youtube-category">
+        <option value="20">Gaming</option>
+        <option value="24">Entertainment</option>
+        <option value="22">People &amp; Blogs</option>
+        <option value="23">Comedy</option>
+        <option value="10">Music</option>
+      </select>
+    </div>
+  </fieldset>
+
+  <div class="actions">
+    <button class="primary" id="push-all">Publicar a las 3</button>
+  </div>
+  <div class="actions">
+    <button class="small" data-push="twitch">Solo Twitch</button>
+    <button class="small" data-push="youtube">Solo YouTube</button>
+    <button class="small" data-push="kick">Solo Kick</button>
+  </div>
+  <div class="actions">
+    <button class="small" id="save-all">Guardar todo</button>
+    <button class="small" id="clear-all">Limpiar todo</button>
+  </div>
+
+  <div class="results-log" id="log"></div>
+
+  <div class="credit">Confluence — by NOX TAIPAN</div>
+
+  <script src="platform-icons.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Confluence Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="currents.css" />
+</head>
+<body class="currents-body">
+  <div class="brand">
+    <div class="mark"></div>
+    <h1>Confluence Chat</h1>
+    <div class="filters">
+      <div class="filter-chip" data-platform="twitch" data-active="true" data-status="offline" role="button" tabindex="0" aria-label="Twitch">
+        <span class="status-dot"></span>
+        <span class="platform-icon-holder"></span>
+      </div>
+      <div class="filter-chip" data-platform="youtube" data-active="true" data-status="offline" role="button" tabindex="0" aria-label="YouTube">
+        <span class="status-dot"></span>
+        <span class="platform-icon-holder"></span>
+      </div>
+      <div class="filter-chip" data-platform="kick" data-active="true" data-status="offline" role="button" tabindex="0" aria-label="Kick">
+        <span class="status-dot"></span>
+        <span class="platform-icon-holder"></span>
+      </div>
+    </div>
+    <button class="settings-btn" id="settings-btn" type="button" aria-label="Configuracion" aria-haspopup="true" aria-expanded="false">⚙</button>
+  </div>
+  <div class="suite-tag">Confluence Suite · by NOX TAIPAN</div>
+
+  <div class="settings-menu" id="settings-menu" hidden>
+    <div class="settings-label">Resaltar menciones</div>
+    <input type="text" id="mention-keyword" class="settings-input" placeholder="ej: noxtaipan" autocomplete="off" />
+
+    <div class="settings-label">Limpiar chat</div>
+    <button class="settings-item" data-clear="all">Todo</button>
+    <button class="settings-item" data-clear="twitch">Solo Twitch</button>
+    <button class="settings-item" data-clear="youtube">Solo YouTube</button>
+    <button class="settings-item" data-clear="kick">Solo Kick</button>
+  </div>
+
+  <div class="chat-feed" id="chat-feed"></div>
+
+  <div class="composer">
+    <div class="composer-emoji-wrap">
+      <button class="emoji-btn" id="emoji-btn" type="button" aria-label="Emojis" aria-haspopup="true" aria-expanded="false">🙂</button>
+      <div class="emoji-picker" id="emoji-picker" hidden></div>
+    </div>
+    <input type="text" id="composer-input" placeholder="Escribe un mensaje..." autocomplete="off" />
+    <button class="composer-send" id="composer-send" type="button" aria-label="Enviar">➤</button>
+  </div>
+  <div class="composer-targets">
+    <button class="composer-target composer-target-all" id="composer-target-all" type="button" aria-label="Todos">Todos</button>
+    <button class="composer-target" data-platform="twitch" data-active="true" data-status="offline" type="button" aria-label="Twitch">
+      <span class="status-dot"></span><span class="platform-icon-holder"></span>
+    </button>
+    <button class="composer-target" data-platform="youtube" data-active="true" data-status="offline" type="button" aria-label="YouTube">
+      <span class="status-dot"></span><span class="platform-icon-holder"></span>
+    </button>
+    <button class="composer-target" data-platform="kick" data-active="true" data-status="offline" type="button" aria-label="Kick">
+      <span class="status-dot"></span><span class="platform-icon-holder"></span>
+    </button>
+  </div>
+
+  <script src="platform-icons.js"></script>
+  <script src="currents.js"></script>
+</body>
+</html>
