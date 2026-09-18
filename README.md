@@ -159,6 +159,16 @@ Confluence solo maneja titulo/categoria/tags y chat — el envio del video en si
 
 Es opcional y se instala por separado — ver su propio repositorio para instrucciones.
 
+## Suite completa
+
+Este repo es una pieza de **Confluence Suite** — cada una se instala por separado, usa lo que necesites:
+
+| Repo | Que es |
+|---|---|
+| **confluence-beta** (este repo) | El panel web: titulo/tags/categoria + chat unificado de Twitch/YouTube/Kick. |
+| [confluence-multistream](https://github.com/NoxTaipan/confluence-multistream) | Plugin nativo de OBS para mandar el video a varios destinos RTMP a la vez. Opcional. |
+| [confluence-streamdeck-beta](https://github.com/NoxTaipan/confluence-streamdeck-beta) | Plugin de Elgato Stream Deck para controlar todo lo anterior desde botones fisicos. Opcional. |
+
 ## Limitaciones conocidas
 
 - YouTube solo puede actualizar un broadcast que ya este en vivo (no crea uno nuevo).
