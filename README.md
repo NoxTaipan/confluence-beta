@@ -13,6 +13,9 @@ La suite tiene tres piezas, cada una un dock/browser source independiente:
 ## Funciones
 
 ### Stream Info — titulo, tags y categoria en un solo lugar
+
+<img src="docs/screenshots/stream-info.png" alt="Dock de Confluence Stream Info" width="360" />
+
 - Conecta/desconecta cada plataforma con un click (OAuth, ventana popup que se cierra sola).
 - Un titulo y una lista de tags compartidos para las 3 plataformas.
 - Categoria/juego por plataforma: buscador con autocompletado para Twitch y Kick, dropdown para YouTube.
@@ -21,6 +24,9 @@ La suite tiene tres piezas, cada una un dock/browser source independiente:
 - Log de resultados por plataforma (OK / error) despues de cada publicacion.
 
 ### Chat — las tres plataformas en un solo feed
+
+<img src="docs/screenshots/chat.png" alt="Dock de Confluence Chat" width="360" />
+
 - Feed en vivo unificado de Twitch, YouTube y Kick (Server-Sent Events, reconecta solo).
 - Filtros por plataforma con punto de estado (conectado/desconectado) para mostrar u ocultar cada una.
 - Resaltado de menciones: configura tu usuario y tus mensajes destacan en el feed.
@@ -44,7 +50,9 @@ http://localhost:7773/overlay.html?limit=8&fade=20&platforms=twitch,kick&positio
 
 ## Instalacion
 
-**Requisitos:** [Node.js](https://nodejs.org) (LTS) y OBS Studio.
+**Requisitos:** [Node.js](https://nodejs.org) (version LTS) y OBS Studio ya instalados.
+
+### 1. Descargar el proyecto
 
 ```bash
 git clone https://github.com/NoxTaipan/confluence-beta.git
@@ -52,30 +60,79 @@ cd confluence-beta
 npm install
 ```
 
-### Credenciales OAuth
+### 2. Crear tus apps OAuth
 
-Confluence corre con **tus propias** apps de desarrollador — no hay credenciales compartidas. Copia `.env.example` a `.env` y completa cada bloque despues de crear la app correspondiente:
+Confluence corre con **tus propias** credenciales — no hay ninguna app compartida ni servidor central. Vas a necesitar crear una app de desarrollador en cada plataforma que quieras usar (podes saltear las que no uses).
 
-- **Twitch:** [Twitch Developer Console](https://dev.twitch.tv/console) → crear una app → Redirect URI: `http://localhost:7773/auth/twitch/callback`.
-- **YouTube:** [Google Cloud Console](https://console.cloud.google.com/) → crear proyecto → habilitar **YouTube Data API v3** → credenciales OAuth 2.0 → Redirect URI: `http://localhost:7773/auth/youtube/callback`.
-- **Kick:** activa 2FA en tu cuenta (requisito de Kick) → Configuracion de cuenta → pestaña **Developer** → crear una app → Redirect URI: `http://localhost:7773/auth/kick/callback`.
+**Twitch**
+1. Entra a [dev.twitch.tv/console](https://dev.twitch.tv/console) con tu cuenta de Twitch y anda a **Applications → Register Your Application**.
+2. Nombre: el que quieras. **OAuth Redirect URLs:** `http://localhost:7773/auth/twitch/callback`. Categoria: "Application Integration" (o similar).
+3. Guardá. Te da un **Client ID**; click en **New Secret** para generar el **Client Secret** (solo se muestra una vez, copialo ya).
 
-Cada Redirect URI ya viene precargada en `.env.example`; solo hace falta pegar el Client ID y Client Secret de cada plataforma.
+**YouTube (Google Cloud)**
+1. Entra a [console.cloud.google.com](https://console.cloud.google.com/) y creá un proyecto nuevo (o usa uno existente).
+2. **APIs & Services → Library** → busca **YouTube Data API v3** → **Enable**.
+3. **APIs & Services → OAuth consent screen**: tipo **External**, completa nombre/email. En la lista de scopes agregá `https://www.googleapis.com/auth/youtube`. Mientras la app quede en estado "Testing" (lo normal para uso personal), agregate a vos mismo en **Test users** con el mismo email de tu cuenta de YouTube — si no, Google rechaza el login.
+4. **APIs & Services → Credentials → Create Credentials → OAuth client ID**, tipo **Web application**. **Authorized redirect URIs:** `http://localhost:7773/auth/youtube/callback`.
+5. Copiá el **Client ID** y **Client Secret** que te da al crearlo.
 
-### Arrancar el servidor
+**Kick**
+1. Activá verificacion en dos pasos (2FA) en tu cuenta de Kick — Kick lo exige para dar acceso al panel de desarrollador.
+2. **Configuracion de la cuenta → pestaña Developer** → crear una app nueva.
+3. **Redirect URL:** `http://localhost:7773/auth/kick/callback`.
+4. Copiá el **Client ID** y **Client Secret**.
+
+### 3. Configurar `.env`
+
+Copia `.env.example` a un archivo nuevo llamado `.env` en la raiz del proyecto, y pegá lo que sacaste de cada plataforma:
+
+```ini
+PORT=7773
+
+TWITCH_CLIENT_ID=       # Client ID de tu app de Twitch
+TWITCH_CLIENT_SECRET=   # Client Secret de esa misma app
+TWITCH_REDIRECT_URI=http://localhost:7773/auth/twitch/callback   # ya viene bien, no tocar
+
+YOUTUBE_CLIENT_ID=
+YOUTUBE_CLIENT_SECRET=
+YOUTUBE_REDIRECT_URI=http://localhost:7773/auth/youtube/callback
+
+KICK_CLIENT_ID=
+KICK_CLIENT_SECRET=
+KICK_REDIRECT_URI=http://localhost:7773/auth/kick/callback
+```
+
+Si vas a usar un `PORT` distinto de `7773`, actualizá tambien las tres `REDIRECT_URI` (y la Redirect URL configurada en cada plataforma) para que coincidan.
+
+### 4. Arrancar el servidor
 
 ```bash
 npm run dev
 ```
 
-Sirve en `http://localhost:7773` (el puerto es configurable via `PORT` en `.env`).
+Deja la terminal abierta — ahi corre el servidor. Sirve en `http://localhost:7773` (o el puerto que hayas puesto en `PORT`). Confirmá que funciona abriendo esa URL en el navegador antes de pasar a OBS.
 
-## Uso
+## Configurar OBS
 
-1. **Agregar los docks en OBS:** Docks → Custom Browser Docks → agregar dos, uno con URL `http://localhost:7773` (Stream Info) y otro con `http://localhost:7773/currents.html` (Chat). Para el overlay, agregalo como fuente **Browser** dentro de una escena con la URL de la seccion anterior.
-2. **Conectar las cuentas:** en el dock de Stream Info, click en cada pastilla (Twitch/YouTube/Kick) para autorizar. Se abre una ventana de login que se cierra sola al terminar.
-3. **Publicar:** escribi titulo y tags, buscá la categoria de Twitch/Kick y elegí la de YouTube, y pulsá "Publicar a las 3" (o solo una plataforma).
-4. **Chatear:** el dock de Chat ya muestra los tres feeds combinados apenas conectes las cuentas; usá el composer de abajo para responder.
+### 1. Agregar el dock de Stream Info
+**Docks → Custom Browser Docks...** (menu superior de OBS) → se abre una ventana con una tabla de **Dock Name** / **URL**. En la primera fila vacia, poné un nombre (ej. `Confluence Stream Info`) y la URL `http://localhost:7773`, despues **Apply**. El dock aparece como una ventana nueva que podes acoplar donde quieras dentro de OBS.
+
+### 2. Agregar el dock de Chat
+En la misma ventana de **Custom Browser Docks**, agregá otra fila: nombre `Confluence Chat`, URL `http://localhost:7773/currents.html` → **Apply**.
+
+### 3. Agregar el Overlay Chat a tu escena (opcional)
+A diferencia de los dos anteriores, este va **dentro de una escena** (se ve en el stream), no como dock:
+1. En el panel **Sources** de la escena donde queres mostrar el chat, click en **+** → **Browser**.
+2. Nombre: el que quieras → **OK**.
+3. En la ventana de propiedades: **URL** → `http://localhost:7773/overlay.html` (agregale los parametros que quieras, ver tabla mas abajo), **Width**/**Height** segun el espacio que le dejes en tu escena, y tildá **Shutdown source when not visible** para que no siga consumiendo recursos si cambias de escena.
+4. **OK**, y acomodalo/redimensionalo en el lienzo de la escena como cualquier otra fuente.
+
+### 4. Conectar tus cuentas
+Andá al dock **Confluence Stream Info** y hacé click en la pastilla de cada plataforma (Twitch/YouTube/Kick) que quieras usar. Se abre una ventanita de login de esa plataforma; autorizá y se cierra sola. La pastilla pasa a mostrar "desconectar" cuando quedó conectada.
+
+### 5. Usar Confluence
+- **Publicar titulo/tags/categoria:** escribi el titulo y los tags (separados por coma), buscá la categoria de Twitch y Kick (autocompletado) y elegí la de YouTube (dropdown), y pulsá **Publicar a las 3** — o los botones de "Solo Twitch/YouTube/Kick" para actualizar una sola plataforma.
+- **Chatear:** el dock de Chat muestra los tres feeds mezclados apenas tengas cuentas conectadas. Usá los chips de arriba para filtrar por plataforma, el engranaje para configurar el resaltado de menciones o limpiar el chat, y el campo de abajo para responder (con selector de "a que plataformas" mandar cada mensaje).
 
 ### Arranque automatico (opcional)
 
@@ -91,7 +148,16 @@ Esto crea la tarea **"Confluence Autostart"**, que lanza el servidor oculto en c
 
 ## Multistream (opcional)
 
-Confluence solo maneja titulo/categoria/tags y chat — el envio del video en si a varios destinos (multistream) es un tema aparte. Si tambien lo necesitas, [confluence-multistream](https://github.com/NoxTaipan/confluence-multistream) (fork de obs-multi-rtmp con soporte websocket) es un dock nativo de OBS totalmente independiente de este proyecto.
+<img src="docs/screenshots/multistream.png" alt="Dock nativo de Confluence Multistream" width="360" />
+
+Confluence solo maneja titulo/categoria/tags y chat — el envio del video en si a varios destinos (multistream) es un tema aparte y no viene incluido en este repo. Si tambien lo necesitas, [confluence-multistream](https://github.com/NoxTaipan/confluence-multistream) (fork de obs-multi-rtmp con soporte websocket) es un **plugin nativo** de OBS (no un dock web), totalmente independiente de este proyecto, que agrega:
+
+- **Start all / Stop all:** arranca o corta todos los destinos configurados de una.
+- **Add new target:** agrega un destino RTMP nuevo (YouTube, Kick, o cualquier servidor RTMP), con **Start / Modify / Delete** por destino.
+- Fila del stream principal de Twitch con su propio toggle, separada de los destinos extra.
+- Un indicador de estado de Confluence (online/offline) con botones **Restart** y **Repair** para reiniciar el servidor de Confluence sin salir de OBS.
+
+Es opcional y se instala por separado — ver su propio repositorio para instrucciones.
 
 ## Limitaciones conocidas
 
