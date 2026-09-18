@@ -172,3 +172,7 @@ Este proyecto es gratis y de codigo abierto. Si te sirve y queres apoyar el mant
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/noxtaipan)
 
 Issues y PRs son bienvenidos.
+
+## Licencia
+
+[MIT](LICENSE)
