@@ -47,6 +47,6 @@ Confluence solo maneja titulo/categoria/tags. El envio del video en si a YouTube
 
 Este proyecto es gratis y de codigo abierto. Si te sirve y queres apoyar el mantenimiento:
 
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/noxtaipan)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/noxtaipan)
 
 Issues y PRs son bienvenidos.
