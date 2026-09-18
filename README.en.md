@@ -179,9 +179,11 @@ This repo is one piece of **Confluence Suite** — each one installs separately,
 
 ## Support
 
-This project is free and open source. If it's useful to you and you want to support its upkeep:
+Everything I publish on GitHub — including this repo — is free and open source, always. If it's useful to you and you want to support its upkeep, buy me a coffee:
 
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/noxtaipan)
+
+Separately, on [Gumroad](https://noxtaipan.gumroad.com/) I sell other products — that one does cost money, to be clear.
 
 Issues and PRs are welcome.
 

@@ -179,9 +179,11 @@ Este repo es una pieza de **Confluence Suite** — cada una se instala por separ
 
 ## Soporte
 
-Este proyecto es gratis y de codigo abierto. Si te sirve y queres apoyar el mantenimiento:
+Todo lo que publico en GitHub — incluido este repo — es gratis y de codigo abierto, siempre. Si te sirve y queres apoyar el mantenimiento, invitame un cafe:
 
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/noxtaipan)
+
+Aparte, en [Gumroad](https://noxtaipan.gumroad.com/) vendo otros productos — eso si tiene costo, para que quede claro.
 
 Issues y PRs son bienvenidos.
 
