@@ -19,9 +19,10 @@ La suite tiene tres piezas, cada una un dock/browser source independiente:
 <img src="docs/screenshots/stream-info.png" alt="Dock de Confluence Stream Info" width="360" />
 
 - Conecta/desconecta cada plataforma con un click (OAuth, ventana popup que se cierra sola).
-- Un titulo y una lista de tags compartidos para las 3 plataformas.
+- Un titulo y tags compartidos para las 3 plataformas — cada tag se confirma como una pildora visual al escribir una coma, Enter, o al salir del campo, asi queda claro cual quedo realmente activado.
 - Categoria/juego por plataforma: buscador con autocompletado para Twitch y Kick, dropdown para YouTube.
 - **"Publicar a las 3"** de un solo click, o publicar a una plataforma sola.
+- **Crear clip de Twitch** con un boton, sin salir de OBS — abre el editor del clip en una pestaña nueva. Solo funciona con el canal en vivo (limitacion de la API de Twitch); si ya tenias Twitch conectado de antes, desconecta y reconecta una vez para habilitar el permiso nuevo.
 - Guardar el formulario como borrador (persiste en el navegador) y recuperarlo la proxima vez, o limpiarlo todo.
 - Log de resultados por plataforma (OK / error) despues de cada publicacion.
 
@@ -30,6 +31,7 @@ La suite tiene tres piezas, cada una un dock/browser source independiente:
 <img src="docs/screenshots/chat.png" alt="Dock de Confluence Chat" width="360" />
 
 - Feed en vivo unificado de Twitch, YouTube y Kick (Server-Sent Events, reconecta solo).
+- **Contador de viewers** de las 3 plataformas en vivo, con un total combinado arriba del feed — cada plataforma se prende/apaga individualmente con un click (util si una no esta en vivo o su token esta vencido, para que no ensucie el total).
 - Filtros por plataforma con punto de estado (conectado/desconectado) para mostrar u ocultar cada una.
 - Resaltado de menciones: configura tu usuario y tus mensajes destacan en el feed.
 - Emotes nativos de cada plataforma renderizados en linea (incluye 7TV en Twitch/Kick).
@@ -175,7 +177,7 @@ Este repo es una pieza de **Confluence Suite** — cada una se instala por separ
 
 - YouTube solo puede actualizar un broadcast que ya este en vivo (no crea uno nuevo).
 - Kick usa una API publica relativamente nueva; si la busqueda de categorias o la actualizacion de canal fallan, revisar los endpoints vigentes en [docs.kick.com](https://docs.kick.com).
-- El modo "Testing" de una app de Google Cloud puede pedir reautenticar cada tanto (subila a produccion en Google Cloud Console para evitarlo).
+- El modo "Testing" de una app de Google Cloud expira el refresh token a los 7 dias de inactividad — se manifiesta como `invalid_grant: Token has been expired or revoked` al intentar publicar o pedir el viewer count. Se resuelve desconectando y reconectando YouTube desde el dock; para que no vuelva a pasar hay que publicar la app en Google Cloud Console (sacarla de "Testing").
 
 ## Soporte
 

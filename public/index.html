@@ -39,8 +39,10 @@
     <label for="title" data-i18n="label_title">Titulo</label>
     <input type="text" id="title" placeholder="Titulo del stream" data-i18n-placeholder="placeholder_title" />
 
-    <label for="tags" data-i18n="label_tags">Tags (separados por coma)</label>
-    <input type="text" id="tags" placeholder="español, fps, ranked" data-i18n-placeholder="placeholder_tags" />
+    <label for="tags-input" data-i18n="label_tags">Tags (separados por coma)</label>
+    <div class="tags-box" id="tags-box">
+      <input type="text" id="tags-input" placeholder="español, fps, ranked" data-i18n-placeholder="placeholder_tags" autocomplete="off" />
+    </div>
   </fieldset>
 
   <fieldset>
@@ -80,11 +82,17 @@
     <button class="small" data-push="youtube" data-i18n="btn_only_youtube">Solo YouTube</button>
     <button class="small" data-push="kick" data-i18n="btn_only_kick">Solo Kick</button>
   </div>
+  <div class="actions" id="twitch-clip-row" hidden>
+    <button class="small" id="clip-twitch" data-i18n="btn_clip_twitch">Crear clip (Twitch)</button>
+  </div>
   <div class="actions">
     <button class="small" id="save-all" data-i18n="btn_save_all">Guardar todo</button>
     <button class="small" id="clear-all" data-i18n="btn_clear_all">Limpiar todo</button>
   </div>
 
+  <div class="log-toolbar">
+    <button type="button" class="log-clear" id="log-clear" data-i18n="btn_clear_log">Limpiar log</button>
+  </div>
   <div class="results-log" id="log"></div>
 
   <div class="credit">Confluence — by NOX TAIPAN</div>

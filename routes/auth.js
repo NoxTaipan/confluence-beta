@@ -81,13 +81,13 @@ router.get('/:platform/callback', async (req, res) => {
           <div class="callback-brand"><div class="mark"></div><span>Confluence Suite</span></div>
           <div class="checkmark">✓</div>
           <h2>${displayName} conectado</h2>
-          <p id="status-text">Cerrando esta ventana...</p>
+          <p id="status-text">Cerrando esta ventana en 3 segundos...</p>
         </div>
         <script>
-          setTimeout(() => { try { window.close(); } catch (e) {} }, 1200);
           setTimeout(() => {
+            try { window.close(); } catch (e) {}
             document.getElementById('status-text').textContent = 'Ya puedes cerrar esta pestaña y volver al dock de OBS.';
-          }, 1800);
+          }, 3000);
         </script>
       </body>
       </html>

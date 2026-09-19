@@ -256,4 +256,77 @@ composerInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') sendMessage();
 });
 
+const VIEWER_TOGGLES_KEY = 'confluence-viewer-toggles';
+let viewerToggles = { twitch: true, youtube: true, kick: true };
+try {
+  viewerToggles = { ...viewerToggles, ...JSON.parse(localStorage.getItem(VIEWER_TOGGLES_KEY)) };
+} catch {
+  // localStorage no disponible - toggles quedan todos en on, no bloqueante
+}
+
+const viewerChips = document.querySelectorAll('.viewer-chip');
+
+function renderViewerToggles() {
+  viewerChips.forEach((chip) => {
+    chip.setAttribute('aria-pressed', String(viewerToggles[chip.dataset.platform]));
+  });
+}
+renderViewerToggles();
+
+function saveViewerToggles() {
+  try {
+    localStorage.setItem(VIEWER_TOGGLES_KEY, JSON.stringify(viewerToggles));
+  } catch {
+    // no bloqueante
+  }
+}
+
+// Un chip apagado ni siquiera se pide al backend - asi el toggle tambien
+// sirve para dejar de pegarle a una plataforma con problemas (ej. token
+// vencido) sin tocar las otras dos.
+async function loadViewers() {
+  const enabled = Object.keys(viewerToggles).filter((p) => viewerToggles[p]);
+  const counts = {};
+  if (enabled.length) {
+    try {
+      const res = await fetch(`/api/viewers?platforms=${enabled.join(',')}`);
+      Object.assign(counts, await res.json());
+    } catch {
+      // el dock sigue funcionando sin el dato - no bloqueante
+    }
+  }
+  let total = 0;
+  let anyCount = false;
+  viewerChips.forEach((chip) => {
+    const platform = chip.dataset.platform;
+    const countEl = chip.querySelector('.viewer-count');
+    const value = counts[platform];
+    if (viewerToggles[platform] && typeof value === 'number') {
+      countEl.textContent = String(value);
+      total += value;
+      anyCount = true;
+    } else {
+      countEl.textContent = '–';
+    }
+  });
+  const totalEl = document.getElementById('viewer-total');
+  if (totalEl) {
+    totalEl.hidden = !anyCount;
+    if (anyCount) document.getElementById('viewer-total-count').textContent = String(total);
+  }
+}
+
+viewerChips.forEach((chip) => {
+  chip.addEventListener('click', () => {
+    const platform = chip.dataset.platform;
+    viewerToggles[platform] = !viewerToggles[platform];
+    saveViewerToggles();
+    renderViewerToggles();
+    loadViewers();
+  });
+});
+
+loadViewers();
+setInterval(loadViewers, 20000);
+
 connect();

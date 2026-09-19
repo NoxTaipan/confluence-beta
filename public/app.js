@@ -12,6 +12,8 @@ function renderStatus() {
     pill.dataset.connected = connected;
     pill.querySelector('.state').textContent = connected ? t('state_disconnect') : t('state_connect');
   });
+  const clipRow = document.getElementById('twitch-clip-row');
+  if (clipRow) clipRow.hidden = !lastStatus.twitch;
 }
 
 async function loadStatus() {
@@ -105,16 +107,77 @@ document.querySelectorAll('.category-row[data-platform="twitch"], .category-row[
   input.addEventListener('input', () => runSearch(input.value.trim()));
 });
 
+// Tags como chips (estilo Aitum): cada uno se "confirma" visualmente al
+// tipear una coma o Enter, o al salir del campo - asi queda claro cual
+// tag quedo realmente activado en vez de un string plano sin feedback.
+const tagsInput = document.getElementById('tags-input');
+const tagsBox = document.getElementById('tags-box');
+let tagsList = [];
+
+function renderTags() {
+  tagsBox.querySelectorAll('.tag-chip').forEach((chip) => chip.remove());
+  tagsList.forEach((tag, i) => {
+    const chip = document.createElement('span');
+    chip.className = 'tag-chip';
+    const label = document.createElement('span');
+    label.textContent = tag;
+    const remove = document.createElement('span');
+    remove.className = 'chip-remove';
+    remove.textContent = '×';
+    remove.addEventListener('click', () => {
+      tagsList.splice(i, 1);
+      renderTags();
+    });
+    chip.append(label, remove);
+    tagsBox.insertBefore(chip, tagsInput);
+  });
+}
+
+function commitTag() {
+  const value = tagsInput.value.trim();
+  if (!value) return;
+  if (!tagsList.includes(value)) tagsList.push(value);
+  tagsInput.value = '';
+  renderTags();
+}
+
+function setTagsList(tagsString) {
+  tagsList = (tagsString || '').split(',').map((t) => t.trim()).filter(Boolean);
+  tagsInput.value = '';
+  renderTags();
+}
+
+// input (no keydown) para que tambien funcione al pegar "a, b, c" de una -
+// cualquier parte antes de la ultima coma se confirma como chip, el resto
+// se deja escribiendose en el campo.
+tagsInput.addEventListener('input', () => {
+  if (!tagsInput.value.includes(',')) return;
+  const parts = tagsInput.value.split(',');
+  const remainder = parts.pop();
+  parts.map((p) => p.trim()).filter(Boolean).forEach((tag) => {
+    if (!tagsList.includes(tag)) tagsList.push(tag);
+  });
+  tagsInput.value = remainder;
+  renderTags();
+});
+
+tagsInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    commitTag();
+  } else if (e.key === 'Backspace' && !tagsInput.value && tagsList.length) {
+    tagsList.pop();
+    renderTags();
+  }
+});
+
+tagsInput.addEventListener('blur', commitTag);
+
 function currentPayload() {
   const title = document.getElementById('title').value.trim();
-  const tags = document
-    .getElementById('tags')
-    .value.split(',')
-    .map((t) => t.trim())
-    .filter(Boolean);
   return {
     title: title || undefined,
-    tags: tags.length ? tags : undefined,
+    tags: tagsList.length ? [...tagsList] : undefined,
     twitchGameId: selected.twitchGameId || undefined,
     kickCategoryId: selected.kickCategoryId || undefined,
     youtubeCategoryId: document.getElementById('youtube-category').value
@@ -185,7 +248,7 @@ function setChip(platform, name) {
 function saveDraft() {
   const draft = {
     title: document.getElementById('title').value,
-    tags: document.getElementById('tags').value,
+    tags: tagsList.join(','),
     youtubeCategoryId: document.getElementById('youtube-category').value,
     twitchGameId: selected.twitchGameId,
     twitchGameName: selected.twitchGameName,
@@ -213,7 +276,7 @@ function restoreDraft() {
   }
   if (!draft) return;
   document.getElementById('title').value = draft.title || '';
-  document.getElementById('tags').value = draft.tags || '';
+  setTagsList(draft.tags || '');
   if (draft.youtubeCategoryId) document.getElementById('youtube-category').value = draft.youtubeCategoryId;
   selected.twitchGameId = draft.twitchGameId || null;
   selected.twitchGameName = draft.twitchGameName || null;
@@ -225,7 +288,7 @@ function restoreDraft() {
 
 function clearAll() {
   document.getElementById('title').value = '';
-  document.getElementById('tags').value = '';
+  setTagsList('');
   document.getElementById('youtube-category').selectedIndex = 0;
   selected.twitchGameId = null;
   selected.twitchGameName = null;
@@ -242,6 +305,27 @@ function clearAll() {
 
 document.getElementById('save-all').addEventListener('click', saveDraft);
 document.getElementById('clear-all').addEventListener('click', clearAll);
+document.getElementById('log-clear').addEventListener('click', () => {
+  document.getElementById('log').innerHTML = '';
+});
+
+document.getElementById('clip-twitch').addEventListener('click', async (e) => {
+  const btn = e.currentTarget;
+  btn.disabled = true;
+  const originalLabel = btn.textContent;
+  btn.textContent = t('btn_clip_twitch_working');
+  try {
+    const res = await fetch('/api/clip/twitch', { method: 'POST' });
+    const data = await res.json();
+    logResult(t('btn_clip_twitch'), data.ok, data.error);
+    if (data.ok) window.open(data.result.editUrl, '_blank', 'noopener');
+  } catch (err) {
+    logResult(t('btn_clip_twitch'), false, err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+});
 
 restoreDraft();
 loadStatus();

@@ -316,6 +316,60 @@ select { cursor: pointer; }
 
 .category-row .selected-chip .chip-remove:hover { opacity: 1; background: rgba(255,255,255,0.08); }
 
+.tags-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 7px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.tags-box:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.tags-box input[type="text"] {
+  flex: 1;
+  min-width: 80px;
+  width: auto;
+  background: transparent;
+  border: none;
+  padding: 2px 3px;
+}
+
+.tags-box input[type="text"]:focus { box-shadow: none; }
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: flash-in 0.15s ease;
+}
+
+.tag-chip .chip-remove {
+  cursor: pointer;
+  opacity: 0.6;
+  font-weight: 700;
+  padding: 0 3px;
+  border-radius: 50%;
+  line-height: 1.4;
+}
+
+.tag-chip .chip-remove:hover { opacity: 1; background: rgba(255,255,255,0.08); }
+
 .results {
   position: absolute;
   z-index: 5;
@@ -347,6 +401,7 @@ select { cursor: pointer; }
 }
 
 .actions:first-of-type { margin-top: 0; }
+.actions[hidden] { display: none; }
 
 button {
   cursor: pointer;
@@ -380,8 +435,26 @@ button.primary:hover { background: var(--accent-strong); filter: none; }
 button.small { flex: 1; }
 button:disabled { opacity: 0.45; cursor: not-allowed; filter: none; transform: none; }
 
-.results-log {
+.log-toolbar {
+  display: flex;
+  justify-content: flex-end;
   margin-top: 12px;
+}
+
+.log-clear {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 4px;
+  text-decoration: underline;
+}
+
+.log-clear:hover { color: var(--text); }
+
+.results-log {
+  margin-top: 4px;
   font-size: 12px;
 }
 

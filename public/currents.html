@@ -35,6 +35,19 @@
   </div>
   <div class="suite-tag">Confluence Suite · by NOX TAIPAN</div>
 
+  <div class="viewers-bar" id="viewers-bar">
+    <button type="button" class="viewer-chip" data-platform="twitch" aria-pressed="true" data-i18n-aria="aria_viewers_toggle_twitch">
+      <span class="platform-icon-holder"></span><span class="viewer-count">–</span>
+    </button>
+    <button type="button" class="viewer-chip" data-platform="youtube" aria-pressed="true" data-i18n-aria="aria_viewers_toggle_youtube">
+      <span class="platform-icon-holder"></span><span class="viewer-count">–</span>
+    </button>
+    <button type="button" class="viewer-chip" data-platform="kick" aria-pressed="true" data-i18n-aria="aria_viewers_toggle_kick">
+      <span class="platform-icon-holder"></span><span class="viewer-count">–</span>
+    </button>
+    <div class="viewer-total" id="viewer-total" hidden><span id="viewer-total-count">0</span></div>
+  </div>
+
   <div class="settings-menu" id="settings-menu" hidden>
     <div class="settings-label" data-i18n="settings_mentions">Resaltar menciones</div>
     <input type="text" id="mention-keyword" class="settings-input" placeholder="ej: noxtaipan" autocomplete="off" data-i18n-placeholder="placeholder_mention" />
