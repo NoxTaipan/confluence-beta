@@ -56,6 +56,8 @@ http://localhost:7773/overlay.html?limit=8&fade=20&platforms=twitch,kick&positio
 
 **Requisitos:** [Node.js](https://nodejs.org) (versión LTS) y OBS Studio ya instalados.
 
+> ⚡ **Instalación rápida:** doble clic en [`install.bat`](install.bat) en la raíz del proyecto — instala este panel (y, si querés, Multistream y Stream Deck también) con un menú guiado, sin escribir comandos a mano. Guía completa de todas las formas de instalar: [INSTALL.md](INSTALL.md) ([English](INSTALL.en.md)). Los pasos manuales de acá abajo siguen funcionando igual, por si preferís hacerlo vos mismo.
+
 ### 1. Descargar el proyecto
 
 ```bash
