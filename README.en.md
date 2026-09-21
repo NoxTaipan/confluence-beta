@@ -71,7 +71,7 @@ npm install
 Confluence runs on **your own** credentials — there's no shared app or central server. You'll need to create a developer app on each platform you want to use (skip the ones you don't).
 
 **Twitch**
-1. Go to [dev.twitch.tv/console](https://dev.twitch.tv/console) with your Twitch account and go to **Applications → Register Your Application**.
+1. Go to [dev.twitch.tv/console/apps/create](https://dev.twitch.tv/console/apps/create) with your Twitch account — you'll land directly on **Register Your Application**.
 2. Name: whatever you want. **OAuth Redirect URLs:** `http://localhost:7773/auth/twitch/callback`. Category: "Application Integration" (or similar).
 3. Save. It gives you a **Client ID**; click **New Secret** to generate the **Client Secret** (only shown once, copy it right away).
 
